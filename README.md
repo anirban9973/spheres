@@ -68,3 +68,5 @@ char* readfile = new           # config file to read; "new" creates fresh config
 char* writefile = config.dat   # file to write final configuration
 char* datafile = stats.dat     # file to write packing fraction / pressure data
 ```
+
+> **Note:** Although `writefile` and `datafile` are set in the input file, the actual output filenames will have the seed value inserted before the extension. For example, with `seed = 42`, `config.dat` becomes `config_42.dat` and `stats.dat` becomes `stats_42.dat`. This ensures runs with different seeds never overwrite each other's output.
