@@ -116,6 +116,8 @@ int main(int argc, char **argv)
       for (int cyc = 0; cyc < input.equilsteps; cyc++)
         {
           b.Process(input.eventspercycle*input.N);
+          output << b.pf << " " << b.pressure << " " <<
+	    b.energychange << " " << b.neventstot << " " << std::endl;
           b.Synchronize(true);
         }
       std::cout << "Equilibration done." << std::endl;
