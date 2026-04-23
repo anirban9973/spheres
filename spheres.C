@@ -14,6 +14,7 @@
 #include <vector>
 #include <time.h>
 #include <string.h>
+#include <string>
 
 #include "box.h"
 #include "sphere.h"
@@ -65,6 +66,20 @@ int main(int argc, char **argv)
       r = pow(input.initialpf*pow(SIZE, DIM)/(input.N*VOLUMESPHERE), 1.0/((double)(DIM)));
     }
 
+  // build seed-tagged output filenames: base_<seed>.ext
+  auto tag_filename = [](const char* name, unsigned int seed) -> std::string {
+    std::string s(name);
+    std::string tag = "_" + std::to_string(seed);
+    size_t dot = s.rfind('.');
+    if (dot != std::string::npos) s.insert(dot, tag);
+    else s += tag;
+    return s;
+  };
+  std::string writefile = tag_filename(input.writefile, input.seed);
+  std::string datafile  = tag_filename(input.datafile,  input.seed);
+  std::cout << "   writefile : " << writefile << std::endl;
+  std::cout << "   datafile  : " << datafile  << std::endl;
+
   box b(input.N, r, input.growthrate, input.maxpf, input.seed);
   
   std::cout << "ngrids = " << b.ngrids << std::endl;
@@ -81,7 +96,7 @@ int main(int argc, char **argv)
       b.CreateSpheres(input.temp);
     } 
   
-  std::ofstream output(input.datafile);
+  std::ofstream output(datafile);
   output.precision(16);
 
   while ((b.pf < input.maxpf) && (b.pressure < input.maxpressure))
@@ -108,7 +123,7 @@ int main(int argc, char **argv)
 
   output.close();
 
-  b.WriteConfiguration(input.writefile);
+  b.WriteConfiguration(writefile.c_str());
   
  
   
