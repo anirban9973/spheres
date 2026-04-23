@@ -13,17 +13,21 @@
 int read_input::read(int argc, char * argv[])
 {
   int error = 0;
-  if (argc != 3)
+  if (argc != 5)
     {
-    std::cout << "Usage: spheres <inputfile> <seed>" << std::endl;
+    std::cout << "Usage: spheres <inputfile> <seed> <initialpf> <maxpf>" << std::endl;
     std::cout << "  <inputfile>  : path to input parameter file" << std::endl;
     std::cout << "  <seed>       : positive integer seed for reproducible runs" << std::endl;
-    std::cout << "Example: ./spheres input 42" << std::endl;
+    std::cout << "  <initialpf>  : initial packing fraction" << std::endl;
+    std::cout << "  <maxpf>      : target packing fraction" << std::endl;
+    std::cout << "Example: ./spheres input 42 0.40 0.73" << std::endl;
     error = 1;
     }
   else
     {
-    seed = (unsigned int)atoi(argv[2]);
+    seed      = (unsigned int)atoi(argv[2]);
+    initialpf = atof(argv[3]);
+    maxpf     = atof(argv[4]);
     std::ifstream infile;
     infile.open(argv[1]);
     if(!infile)
@@ -39,8 +43,6 @@ int read_input::read(int argc, char * argv[])
     char buf[100],c;
     infile.get(buf,100,'='); infile.get(c); infile >> eventspercycle;
     infile.get(buf,100,'='); infile.get(c); infile >> N;
-    infile.get(buf,100,'='); infile.get(c); infile >> initialpf;
-    infile.get(buf,100,'='); infile.get(c); infile >> maxpf;
     infile.get(buf,100,'='); infile.get(c); infile >> temp;
     infile.get(buf,100,'='); infile.get(c); infile >> growthrate;
     infile.get(buf,100,'='); infile.get(c); infile >> maxpressure;

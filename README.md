@@ -39,15 +39,15 @@ Original code by Monica Skoge (2006, Princeton University).
 
 ## Input File Format
 
-Run as: `./spheres input <seed>`
+Run as: `./spheres <inputfile> <seed> <initialpf> <maxpf>`
+
+Example: `./spheres input 42 0.40 0.73`
 
 The `input` file must contain fields in this exact order:
 
 ```
 int eventspercycle = 1         # avg events per sphere between output/sync steps (controls sampling frequency, not pf accuracy)
 int N = 10000                  # number of spheres
-double initialpf = 0.01        # initial packing fraction
-double maxpf = 0.25            # max packing fraction (stop condition)
 double temp = 0.2              # initial temperature (0 = zero velocities)
 double growthrate = 0.0001     # sphere growth rate
 double maxpressure = 100.      # max pressure (stop condition)
