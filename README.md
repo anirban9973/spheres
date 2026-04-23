@@ -1,7 +1,6 @@
 # Hard Sphere MD — Modifications to Skoge Code
 
-Original code by Monica Skoge (2006, Princeton University).  
-Contact: Aleksandar Donev (adonev@math.princeton.edu)
+Original code by Monica Skoge (2006, Princeton University).
 
 ---
 
