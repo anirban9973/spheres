@@ -21,17 +21,17 @@ Original code by Monica Skoge (2006, Princeton University).
 
 ---
 
-### 2. Equilibration phase before growth (`equilsteps`)
+### 2. Equilibration phase after compression (`equilsteps`)
 
-**Problem:** The original code had no equilibration phase — it immediately started growing spheres from the initial (random) configuration. This means the system has no time to relax before compression begins.
+**Problem:** The original code had no equilibration phase — it stopped as soon as the target packing fraction or max pressure was reached, with no time for the system to relax at the final density.
 
 **Files changed:**
 - `read_input.h` — added `int equilsteps` field
 - `read_input.C` — parses and prints `equilsteps` from the input file
-- `input` — added `int equilsteps = 100`
-- `spheres.C` — added equilibration loop before the growth loop
+- `input` — added `int equilsteps = 1000`
+- `spheres.C` — added equilibration loop after the growth loop
 
-**What it does:** Before the growth loop starts, the code temporarily sets `growthrate = 0` and runs `equilsteps` cycles of `eventspercycle * N` events each, followed by `Synchronize(true)` (velocity rescaling + event reset). After equilibration, `growthrate` is restored to the value in the input file and the normal compression loop proceeds.
+**What it does:** After the growth loop reaches the target packing fraction, the code sets `growthrate = 0` and runs `equilsteps` cycles of `eventspercycle * N` events each, followed by `Synchronize(true)` (velocity rescaling + event reset), keeping the radius fixed. The final configuration written to disk reflects the equilibrated state.
 
 **Usage:** Set `equilsteps` in the `input` file to the desired number of equilibration cycles. Set to `0` to skip equilibration entirely (reproduces original behavior).
 
