@@ -81,20 +81,6 @@ int main(int argc, char **argv)
       b.CreateSpheres(input.temp);
     } 
   
-  // equilibration: run dynamics at fixed radius (growthrate = 0)
-  if (input.equilsteps > 0)
-    {
-      std::cout << "Equilibrating for " << input.equilsteps << " cycles..." << std::endl;
-      b.growthrate = 0.;
-      for (int cyc = 0; cyc < input.equilsteps; cyc++)
-        {
-          b.Process(input.eventspercycle*input.N);
-          b.Synchronize(true);
-        }
-      b.growthrate = input.growthrate;
-      std::cout << "Equilibration done." << std::endl;
-    }
-
   std::ofstream output(input.datafile);
   output.precision(16);
 
@@ -106,7 +92,20 @@ int main(int argc, char **argv)
 
       b.Synchronize(true);
     }
-  
+
+  // equilibration: run dynamics at fixed radius after reaching target packing fraction
+  if (input.equilsteps > 0)
+    {
+      std::cout << "Equilibrating for " << input.equilsteps << " cycles at pf = " << b.pf << "..." << std::endl;
+      b.growthrate = 0.;
+      for (int cyc = 0; cyc < input.equilsteps; cyc++)
+        {
+          b.Process(input.eventspercycle*input.N);
+          b.Synchronize(true);
+        }
+      std::cout << "Equilibration done." << std::endl;
+    }
+
   output.close();
 
   b.WriteConfiguration(input.writefile);
