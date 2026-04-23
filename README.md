@@ -37,6 +37,18 @@ Original code by Monica Skoge (2006, Princeton University).
 
 ---
 
+## Changing the Dimension
+
+The spatial dimension is set at compile time in `vector.h` line 7:
+
+```c
+#define DIM 2
+```
+
+Change this value and recompile (`make clean && make`) to run in a different dimension.
+
+---
+
 ## Input File Format
 
 Run as: `./spheres <inputfile> <seed> <initialpf> <maxpf>`
