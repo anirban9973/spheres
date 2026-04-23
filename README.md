@@ -12,13 +12,12 @@ Original code by Monica Skoge (2006, Princeton University).
 
 **Files changed:**
 - `read_input.h` — added `unsigned int seed` field
-- `read_input.C` — parses and prints `seed` from the input file
-- `input` — added `unsigned int seed = 42`
+- `read_input.C` — reads seed from command-line argument, updated syntax to `spheres input seed`
 - `box.h` — updated constructor signature to accept `unsigned int seed`
 - `box.C` — constructor now calls `srandom(seed)` instead of `srandom(time(0))`
 - `spheres.C` — passes `input.seed` to the `box` constructor
 
-**Usage:** Set `seed` in the `input` file to any positive integer. Two runs with the same seed produce identical initial positions and velocities.
+**Usage:** Pass the seed as a command-line argument: `./spheres input 42`. Two runs with the same seed produce identical initial positions and velocities.
 
 ---
 
@@ -40,6 +39,8 @@ Original code by Monica Skoge (2006, Princeton University).
 
 ## Input File Format
 
+Run as: `./spheres input <seed>`
+
 The `input` file must contain fields in this exact order:
 
 ```
@@ -51,7 +52,6 @@ double temp = 0.2              # initial temperature (0 = zero velocities)
 double growthrate = 0.0001     # sphere growth rate
 double maxpressure = 100.      # max pressure (stop condition)
 int equilsteps = 100           # equilibration cycles at fixed radius (0 to skip)
-unsigned int seed = 42         # RNG seed for reproducibility
 char* readfile = new           # config file to read; "new" creates fresh config
 char* writefile = config.dat   # file to write final configuration
 char* datafile = stats.dat     # file to write packing fraction / pressure data

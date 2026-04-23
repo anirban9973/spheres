@@ -13,13 +13,17 @@
 int read_input::read(int argc, char * argv[])
 {
   int error = 0;
-  if (argc != 2) 
+  if (argc != 3)
     {
-    std::cout << "Syntax: spheres input" << std::endl;
+    std::cout << "Usage: spheres <inputfile> <seed>" << std::endl;
+    std::cout << "  <inputfile>  : path to input parameter file" << std::endl;
+    std::cout << "  <seed>       : positive integer seed for reproducible runs" << std::endl;
+    std::cout << "Example: ./spheres input 42" << std::endl;
     error = 1;
-    } 
-  else 
+    }
+  else
     {
+    seed = (unsigned int)atoi(argv[2]);
     std::ifstream infile;
     infile.open(argv[1]);
     if(!infile)
@@ -41,7 +45,6 @@ int read_input::read(int argc, char * argv[])
     infile.get(buf,100,'='); infile.get(c); infile >> growthrate;
     infile.get(buf,100,'='); infile.get(c); infile >> maxpressure;
     infile.get(buf,100,'='); infile.get(c); infile >> equilsteps;
-    infile.get(buf,100,'='); infile.get(c); infile >> seed;
     infile.get(buf,100,'='); infile.get(c);
     infile.width(NAME_LEN-1); infile >> readfile;
     infile.get(buf,100,'='); infile.get(c); 
